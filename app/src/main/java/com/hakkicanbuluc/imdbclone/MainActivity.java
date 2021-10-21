@@ -1,22 +1,32 @@
 package com.hakkicanbuluc.imdbclone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.hakkicanbuluc.imdbclone.databinding.ActivityMainBinding;
+import com.hakkicanbuluc.imdbclone.databinding.ActivityRegisterBinding;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         mAuth = FirebaseAuth.getInstance();
     }
@@ -33,6 +43,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
+        String email = binding.loginEmail.getText().toString();
+        String password = binding.loginPassword.getText().toString();
+
+        if (email.equals("") || password.equals("")) {
+            Toast.makeText(this, "Enter email and password", Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
+                Intent intent = new Intent(MainActivity.this, HomePage.class);
+                startActivity(intent);
+                finish();
+            }).addOnFailureListener(e -> Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show());
+        }
     }
 
     public void register(View view) {
