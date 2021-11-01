@@ -5,16 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hakkicanbuluc.imdbclone.R;
+import com.hakkicanbuluc.imdbclone.model.OpenMovieModel;
 import com.hakkicanbuluc.imdbclone.model.TheMovieModel;
 import com.hakkicanbuluc.imdbclone.model.TheResultModel;
+import com.hakkicanbuluc.imdbclone.service.OpenMovieAPI;
 import com.hakkicanbuluc.imdbclone.service.TheResultAPI;
 
 import java.util.ArrayList;
@@ -39,33 +43,25 @@ public class HomePage extends AppCompatActivity {
             popularMovieList.add(title);
         }*/
 
-    List<TheMovieModel> movies = new ArrayList<>(), openMovies = new ArrayList<>();
-    private String THERESULTBASEURL = "https://api.themoviedb.org/3/";
-    private  String THEMOVIEBASEURL = "http://www.omdbapi.com/";
+    List<TheMovieModel> movies = new ArrayList<>();
+    List<OpenMovieModel> openMovies = new ArrayList<>();
+    private String THEMOVIEBASEURL = "https://api.themoviedb.org/3/";
+    private  String OPENMOVIEBASEURL = "https://www.omdbapi.com/";
     Retrofit retrofit;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        Gson gson = new GsonBuilder().setLenient().create();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(THERESULTBASEURL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        loadMovies();
+        gson = new GsonBuilder().setLenient().create();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(THEMOVIEBASEURL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        loadOpenMovies();
-
-    }
-
-    private void loadOpenMovies() {
+        loadMovies();
 
     }
 
@@ -77,11 +73,18 @@ public class HomePage extends AppCompatActivity {
             public void onResponse(@NonNull Call<TheResultModel> call, @NonNull Response<TheResultModel> response) {
                 if (response.isSuccessful()) {
                     TheResultModel theResultModel = response.body();
-                    List<HashMap> theResultModelResults = theResultModel.getResults();
-                    for (HashMap map : theResultModelResults) {
-                        TheMovieModel theMovieModel = TheMovieModel.fromMap(map);
-                        movies.add(theMovieModel);
+                    List<HashMap> theResultModelResults = theResultModel != null ? theResultModel.getResults() : null;
+                    if (theResultModelResults != null) {
+                        for (HashMap map : theResultModelResults) {
+                            TheMovieModel theMovieModel = TheMovieModel.fromMap(map);
+                            movies.add(theMovieModel);
+                        }
                     }
+                    retrofit = new Retrofit.Builder()
+                            .baseUrl(OPENMOVIEBASEURL)
+                            .addConverterFactory(GsonConverterFactory.create(gson))
+                            .build();
+                    loadOpenMovies();
                 }
             }
 
@@ -90,6 +93,29 @@ public class HomePage extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void loadOpenMovies() {
+        OpenMovieAPI openMovieAPI = retrofit.create(OpenMovieAPI.class);
+        for (TheMovieModel movie : movies) {
+            Call<OpenMovieModel> call = openMovieAPI.getData(movie.getTitle());
+            call.enqueue(new Callback<OpenMovieModel>() {
+                @Override
+                public void onResponse(Call<OpenMovieModel> call, Response<OpenMovieModel> response) {
+                    if (response.isSuccessful()) {
+                        OpenMovieModel openMovieModel = response.body();
+                        if (openMovieModel.isNotNull()) {
+                            openMovies.add(openMovieModel);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<OpenMovieModel> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
     @Override

@@ -20,6 +20,10 @@ public class TheMovieModel {
         return theMovieModel;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     @NonNull
     @Override
     public String toString() {

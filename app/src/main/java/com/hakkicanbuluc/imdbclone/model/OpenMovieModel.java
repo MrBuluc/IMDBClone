@@ -32,6 +32,16 @@ public class OpenMovieModel {
     String votes;
     @SerializedName("Type")
     String type;
+    @SerializedName("Response")
+    String response;
+
+    public boolean isNotNull() {
+        return !response.equals("False");
+    }
+
+    public String getTitle() {
+        return title;
+    }
 
     @NonNull
     @Override
