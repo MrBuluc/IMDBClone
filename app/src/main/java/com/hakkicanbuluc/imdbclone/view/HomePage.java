@@ -2,6 +2,8 @@ package com.hakkicanbuluc.imdbclone.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,13 +11,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hakkicanbuluc.imdbclone.R;
-import com.hakkicanbuluc.imdbclone.model.OpenMovieModel;
+import com.hakkicanbuluc.imdbclone.adapter.RecyclerViewAdapter;
+import com.hakkicanbuluc.imdbclone.model.OpenModel;
 import com.hakkicanbuluc.imdbclone.model.TheMovieModel;
 import com.hakkicanbuluc.imdbclone.model.TheResultModel;
 import com.hakkicanbuluc.imdbclone.service.OpenMovieAPI;
@@ -35,25 +37,22 @@ public class HomePage extends AppCompatActivity {
 
     //https://api.themoviedb.org/3/movie/popular?api_key=a3c55ea01f37b3c34f8b15b6a244f40b
     //http://www.omdbapi.com/?apikey=788a37c5&t=Dune
-    /*List<String> popularMovieList = new ArrayList<>();
-        HashMap<String, Object> resultMap = new HashMap<String, Object>();
-        ArrayList<HashMap<String, Object>> results = (ArrayList<HashMap<String, Object>>) resultMap.get("results");
-        for (HashMap map : results) {
-            String title = (String) map.get("title");
-            popularMovieList.add(title);
-        }*/
 
     List<TheMovieModel> movies = new ArrayList<>();
-    List<OpenMovieModel> openMovies = new ArrayList<>();
+    ArrayList<OpenModel> openModels = new ArrayList<>();
     private String THEMOVIEBASEURL = "https://api.themoviedb.org/3/";
     private  String OPENMOVIEBASEURL = "https://www.omdbapi.com/";
     Retrofit retrofit;
     Gson gson;
+    RecyclerView recyclerView;
+    RecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        recyclerView = findViewById(R.id.recyclerView);
 
         gson = new GsonBuilder().setLenient().create();
 
@@ -98,20 +97,24 @@ public class HomePage extends AppCompatActivity {
     private void loadOpenMovies() {
         OpenMovieAPI openMovieAPI = retrofit.create(OpenMovieAPI.class);
         for (TheMovieModel movie : movies) {
-            Call<OpenMovieModel> call = openMovieAPI.getData(movie.getTitle());
-            call.enqueue(new Callback<OpenMovieModel>() {
+            Call<OpenModel> call = openMovieAPI.getData(movie.getTitle());
+            call.enqueue(new Callback<OpenModel>() {
                 @Override
-                public void onResponse(Call<OpenMovieModel> call, Response<OpenMovieModel> response) {
+                public void onResponse(Call<OpenModel> call, Response<OpenModel> response) {
                     if (response.isSuccessful()) {
-                        OpenMovieModel openMovieModel = response.body();
-                        if (openMovieModel.isNotNull()) {
-                            openMovies.add(openMovieModel);
+                        OpenModel openModel = response.body();
+                        if (openModel.isNotNull()) {
+                            openModels.add(openModel);
+
+                            recyclerView.setLayoutManager(new LinearLayoutManager(HomePage.this));
+                            recyclerViewAdapter = new RecyclerViewAdapter(openModels);
+                            recyclerView.setAdapter(recyclerViewAdapter);
                         }
                     }
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<OpenMovieModel> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<OpenModel> call, @NonNull Throwable t) {
                     t.printStackTrace();
                 }
             });

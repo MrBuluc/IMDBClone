@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-public class OpenMovieModel {
+public class OpenModel {
 
     @SerializedName("Title")
     String title;
@@ -41,6 +41,58 @@ public class OpenMovieModel {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public String getReleased() {
+        return released;
+    }
+
+    public String getRunTime() {
+        return runTime;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public String getVotes() {
+        return votes;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getResponse() {
+        return response;
     }
 
     @NonNull

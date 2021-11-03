@@ -24,6 +24,18 @@ public class TheMovieModel {
         return title;
     }
 
+    public String getOverview() {
+        return overview;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public Double getVoteAvg() {
+        return voteAvg;
+    }
+
     @NonNull
     @Override
     public String toString() {
