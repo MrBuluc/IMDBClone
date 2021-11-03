@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
@@ -113,6 +115,10 @@ public class HomePage extends AppCompatActivity {
 
             recyclerView.setLayoutManager(new LinearLayoutManager(HomePage.this));
             recyclerViewAdapter = new RecyclerViewAdapter(openModels);
+            recyclerViewAdapter.setClickListener((index, view) -> {
+                OpenModel openModel1 = openModels.get(index);
+                Log.d("Title", openModel1.getTitle());
+            });
             recyclerView.setAdapter(recyclerViewAdapter);
         }
     }

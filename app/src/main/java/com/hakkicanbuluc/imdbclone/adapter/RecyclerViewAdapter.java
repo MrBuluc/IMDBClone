@@ -20,6 +20,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private String[] colors = {"#a3ff00","#ff00aa","#b4a7d6","#a4c2f4","#8ee5ee","#cd950c",
             "#bf00ff","#f47932"};
 
+    private static ClickListener clickListener;
+
     public RecyclerViewAdapter(ArrayList<OpenModel> openModels) {
         this.openModels = openModels;
     }
@@ -42,12 +44,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return openModels.size();
     }
 
-    public class RowHolder extends RecyclerView.ViewHolder {
+    public void setClickListener(ClickListener clickListener) {
+        RecyclerViewAdapter.clickListener = clickListener;
+    }
+
+    public class RowHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         TextView textTitle, textYear;
 
         public RowHolder(@NonNull View itemView) {
             super(itemView);
-
+            itemView.setOnClickListener(this);
         }
 
         public void bind(OpenModel openModel, String[] colors, Integer index) {
@@ -57,5 +63,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             textTitle.setText(openModel.getTitle());
             textYear.setText(openModel.getYear());
         }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(getBindingAdapterPosition(), view);
+        }
+    }
+
+    public interface ClickListener {
+        void onItemClick(int index, View view);
     }
 }
