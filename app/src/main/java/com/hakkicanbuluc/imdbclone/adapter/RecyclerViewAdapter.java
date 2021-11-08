@@ -61,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             textTitle = itemView.findViewById(R.id.text_title);
             textYear = itemView.findViewById(R.id.text_year);
             textTitle.setText(openModel.getTitle());
-            textYear.setText(openModel.getYear());
+            textYear.setText(openModel.getReleased());
         }
 
         @Override

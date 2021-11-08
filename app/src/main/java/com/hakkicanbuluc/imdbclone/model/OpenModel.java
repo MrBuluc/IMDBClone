@@ -4,12 +4,12 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-public class OpenModel {
+import java.io.Serializable;
+
+public class OpenModel implements Serializable {
 
     @SerializedName("Title")
     String title;
-    @SerializedName("Year")
-    String year;
     @SerializedName("Released")
     String released;
     @SerializedName("Runtime")
@@ -41,10 +41,6 @@ public class OpenModel {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getYear() {
-        return year;
     }
 
     public String getReleased() {
@@ -93,14 +89,5 @@ public class OpenModel {
 
     public String getResponse() {
         return response;
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "OpenMovieModel{" +
-                "title='" + title + '\'' +
-                ", year='" + year + '\'' +
-                '}';
     }
 }

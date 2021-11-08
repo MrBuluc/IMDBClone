@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/HAKKICAN/AndroidStudioProjects/JavaProjects/IMDBClone/app/src/main/res/layout/activity_detail.xml" value="0.264" />
         <entry key="..\:/Users/HAKKICAN/AndroidStudioProjects/JavaProjects/IMDBClone/app/src/main/res/layout/activity_home_page.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/HAKKICAN/AndroidStudioProjects/JavaProjects/IMDBClone/app/src/main/res/layout/row_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/HAKKICAN/AndroidStudioProjects/JavaProjects/IMDBClone/app/src/main/res/menu/option_menu.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
