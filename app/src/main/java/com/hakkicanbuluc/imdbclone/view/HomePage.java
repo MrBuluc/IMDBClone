@@ -74,7 +74,7 @@ public class HomePage extends AppCompatActivity {
         TheResultAPI theResultAPI = retrofit.create(TheResultAPI.class);
 
         compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(theResultAPI.getData()
+        compositeDisposable.add(theResultAPI.getMovieData()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(this::handleResponseTheResultModel));

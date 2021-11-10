@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 public class DetailActivity extends AppCompatActivity {
     OpenModel movie;
     TextView txtTitle, txtReleased, txtRunTime, txtCategories, txtDirector,
-            txtWriter, txtActors, txtSummary;
+            txtWriter, txtActors, txtSummary, txtRating, txtVotes, txtType;
     ImageView imagePoster;
 
     @Override
@@ -42,6 +42,9 @@ public class DetailActivity extends AppCompatActivity {
         txtWriter = findViewById(R.id.txtWriter);
         txtActors = findViewById(R.id.txtActors);
         txtSummary = findViewById(R.id.txtSummary);
+        txtRating = findViewById(R.id.txtRating);
+        txtVotes = findViewById(R.id.txtVotes);
+        txtType = findViewById(R.id.txtType);
 
         imagePoster = findViewById(R.id.imagePoster);
     }
@@ -55,6 +58,9 @@ public class DetailActivity extends AppCompatActivity {
         txtWriter.setText(movie.getWriter());
         txtActors.setText(movie.getActors());
         txtSummary.setText(movie.getSummary());
+        txtRating.setText(movie.getRating() + "/10");
+        txtVotes.setText(movie.getVotes());
+        txtType.setText(movie.getType());
 
         Picasso.get()
                 .load(movie.getPosterUrl())
