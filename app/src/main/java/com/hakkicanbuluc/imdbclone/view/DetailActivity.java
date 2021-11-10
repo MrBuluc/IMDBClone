@@ -12,7 +12,7 @@ import com.hakkicanbuluc.imdbclone.model.OpenModel;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
-    OpenModel movie;
+    OpenModel openModel;
     TextView txtTitle, txtReleased, txtRunTime, txtCategories, txtDirector,
             txtWriter, txtActors, txtSummary, txtRating, txtVotes, txtType;
     ImageView imagePoster;
@@ -23,7 +23,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         Intent intent = getIntent();
-        movie = (OpenModel) intent.getSerializableExtra("movie");
+        openModel = (OpenModel) intent.getSerializableExtra("openModel");
 
         bindingViews();
 
@@ -50,20 +50,24 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setting() {
-        txtTitle.setText(movie.getTitle());
-        txtReleased.setText(movie.getReleased());
-        txtRunTime.setText(movie.getRunTime());
-        txtCategories.setText(movie.getCategories());
-        txtDirector.setText(movie.getDirector());
-        txtWriter.setText(movie.getWriter());
-        txtActors.setText(movie.getActors());
-        txtSummary.setText(movie.getSummary());
-        txtRating.setText(movie.getRating() + "/10");
-        txtVotes.setText(movie.getVotes());
-        txtType.setText(movie.getType());
+        txtTitle.setText(openModel.getTitle());
+        txtReleased.setText(openModel.getReleased());
+        txtRunTime.setText(openModel.getRunTime());
+        txtCategories.setText(openModel.getCategories());
+        txtDirector.setText(openModel.getDirector());
+        txtWriter.setText(openModel.getWriter());
+        txtActors.setText(openModel.getActors());
+        txtSummary.setText(openModel.getSummary());
+        txtRating.setText(openModel.getRating() + "/10");
+        txtVotes.setText(openModel.getVotes());
+        String type = "";
+        if (openModel.getType().equals("series"))
+            type += "Tv ";
+        type += openModel.getType();
+        txtType.setText(type);
 
         Picasso.get()
-                .load(movie.getPosterUrl())
+                .load(openModel.getPosterUrl())
                 .into(imagePoster);
     }
 }

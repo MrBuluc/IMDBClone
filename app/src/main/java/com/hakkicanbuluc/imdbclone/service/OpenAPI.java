@@ -6,7 +6,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface OpenMovieAPI {
+public interface OpenAPI {
     //http://www.omdbapi.com/?apikey=788a37c5&t=Dune
 
     @GET("?apikey=788a37c5")

@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IMDBClone">
         <activity
+            android:name=".view.TvSeriesActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.DetailActivity"
             android:exported="false" />
         <activity android:name=".view.HomePage" />
