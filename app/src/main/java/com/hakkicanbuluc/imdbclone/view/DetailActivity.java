@@ -1,11 +1,11 @@
 package com.hakkicanbuluc.imdbclone.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.hakkicanbuluc.imdbclone.R;
 import com.hakkicanbuluc.imdbclone.model.OpenModel;
@@ -58,7 +58,8 @@ public class DetailActivity extends AppCompatActivity {
         txtWriter.setText(openModel.getWriter());
         txtActors.setText(openModel.getActors());
         txtSummary.setText(openModel.getSummary());
-        txtRating.setText(openModel.getRating() + "/10");
+        txtRating.setText(!openModel.getRating().equals("N/A") ? openModel.getRating() + "/10" :
+                "");
         txtVotes.setText(openModel.getVotes());
         String type = "";
         if (openModel.getType().equals("series"))

@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hakkicanbuluc.imdbclone.R;
 import com.hakkicanbuluc.imdbclone.model.OpenModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -30,7 +33,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public RowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.row_layout, parent, false);
+        View view = layoutInflater.inflate(R.layout.fragment_movie, parent, false);
         return new RowHolder(view);
     }
 
@@ -49,19 +52,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public class RowHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
-        TextView textTitle, textYear;
+        TextView txtMovieName;
+        ImageView imgPoster;
 
         public RowHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
+            Button btnDetail = itemView.findViewById(R.id.btnDetail);
+            btnDetail.setOnClickListener(this);
         }
 
         public void bind(OpenModel openModel, String[] colors, Integer index) {
             itemView.setBackgroundColor(Color.parseColor(colors[index % colors.length]));
-            textTitle = itemView.findViewById(R.id.text_title);
-            textYear = itemView.findViewById(R.id.text_year);
-            textTitle.setText(openModel.getTitle());
-            textYear.setText(openModel.getReleased());
+            txtMovieName = itemView.findViewById(R.id.txtMovieName);
+            txtMovieName.setText(openModel.getTitle());
+            imgPoster = itemView.findViewById(R.id.imgPoster);
+            Picasso.get()
+                    .load(openModel.getPosterUrl())
+                    .into(imgPoster);
+//            textTitle = itemView.findViewById(R.id.text_title);
+//            textYear = itemView.findViewById(R.id.text_year);
+//            textTitle.setText(openModel.getTitle());
+//            textYear.setText(openModel.getReleased());
         }
 
         @Override
