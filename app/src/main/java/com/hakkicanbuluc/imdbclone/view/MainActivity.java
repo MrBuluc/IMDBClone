@@ -14,6 +14,7 @@ import com.hakkicanbuluc.imdbclone.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ActivityMainBinding binding;
+    String elma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
