@@ -36,7 +36,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomePage extends AppCompatActivity {
+public class PopularMovies extends AppCompatActivity {
 
     //https://api.themoviedb.org/3/movie/popular?api_key=a3c55ea01f37b3c34f8b15b6a244f40b
     //http://www.omdbapi.com/?apikey=788a37c5&t=Dune
@@ -56,7 +56,7 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_popular_movies);
 
         recyclerView = findViewById(R.id.moviesRecyclerView);
 
@@ -111,11 +111,11 @@ public class HomePage extends AppCompatActivity {
         if (openModel.isNotNull()) {
             openMovieModels.add(openModel);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(HomePage.this));
+            recyclerView.setLayoutManager(new LinearLayoutManager(PopularMovies.this));
             recyclerViewAdapter = new RecyclerViewAdapter(openMovieModels);
             recyclerViewAdapter.setClickListener((index, view) -> {
                 OpenModel openModel1 = openMovieModels.get(index);
-                Intent intent = new Intent(HomePage.this, DetailActivity.class);
+                Intent intent = new Intent(PopularMovies.this, DetailActivity.class);
                 intent.putExtra("openModel", openModel1);
                 startActivity(intent);
             });
@@ -138,7 +138,7 @@ public class HomePage extends AppCompatActivity {
                 logout();
                 break;
             case R.id.tvSeries:
-                startActivity(new Intent(HomePage.this, TvSeriesActivity.class));
+                startActivity(new Intent(PopularMovies.this, TvSeriesActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -146,7 +146,7 @@ public class HomePage extends AppCompatActivity {
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(HomePage.this, MainActivity.class);
+        Intent intent = new Intent(PopularMovies.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

@@ -14,7 +14,7 @@ import com.hakkicanbuluc.imdbclone.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ActivityMainBinding binding;
-    String elma;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(MainActivity.this, HomePage.class);
+            Intent intent = new Intent(MainActivity.this, PopularMovies.class);
             startActivity(intent);
             finish();
         }
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter email and password", Toast.LENGTH_LONG).show();
         } else {
             mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
-                Intent intent = new Intent(MainActivity.this, HomePage.class);
+                Intent intent = new Intent(MainActivity.this, PopularMovies.class);
                 startActivity(intent);
                 finish();
             }).addOnFailureListener(e -> Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show());

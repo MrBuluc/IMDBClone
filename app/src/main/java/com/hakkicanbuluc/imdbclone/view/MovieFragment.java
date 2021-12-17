@@ -1,4 +1,4 @@
-package com.hakkicanbuluc.imdbclone;
+package com.hakkicanbuluc.imdbclone.view;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.hakkicanbuluc.imdbclone.R;
 
 /**
  * A simple {@link Fragment} subclass.
