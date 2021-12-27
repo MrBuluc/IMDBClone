@@ -60,14 +60,16 @@ public class PopularMovies extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.moviesRecyclerView);
 
-        gson = new GsonBuilder().setLenient().create();
+        new Thread(() -> {
+            gson = new GsonBuilder().setLenient().create();
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl(THEMOVIEBASEURL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        loadMovies();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(THEMOVIEBASEURL)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            loadMovies();
+        }).start();
     }
 
     private void loadMovies() {
@@ -108,19 +110,21 @@ public class PopularMovies extends AppCompatActivity {
     }
 
     private void handleResponseOpenMovie(@NonNull OpenModel openModel) {
-        if (openModel.isNotNull()) {
-            openMovieModels.add(openModel);
+        this.runOnUiThread(() -> {
+            if (openModel.isNotNull()) {
+                openMovieModels.add(openModel);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(PopularMovies.this));
-            recyclerViewAdapter = new RecyclerViewAdapter(openMovieModels);
-            recyclerViewAdapter.setClickListener((index, view) -> {
-                OpenModel openModel1 = openMovieModels.get(index);
-                Intent intent = new Intent(PopularMovies.this, DetailActivity.class);
-                intent.putExtra("openModel", openModel1);
-                startActivity(intent);
-            });
-            recyclerView.setAdapter(recyclerViewAdapter);
-        }
+                recyclerView.setLayoutManager(new LinearLayoutManager(PopularMovies.this));
+                recyclerViewAdapter = new RecyclerViewAdapter(openMovieModels);
+                recyclerViewAdapter.setClickListener((index, view) -> {
+                    OpenModel openModel1 = openMovieModels.get(index);
+                    Intent intent = new Intent(PopularMovies.this, DetailActivity.class);
+                    intent.putExtra("openModel", openModel1);
+                    startActivity(intent);
+                });
+                recyclerView.setAdapter(recyclerViewAdapter);
+            }
+        });
     }
 
     @Override
