@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void createNewUser(String uid, HashMap<String, Object> newUser) {
         firebaseFirestore.collection("Users").document(uid).set(newUser).addOnSuccessListener(aVoid -> {
-            Intent intent = new Intent(RegisterActivity.this, PopularMovies.class);
+            Intent intent = new Intent(RegisterActivity.this, HomePage.class);
             startActivity(intent);
             finish();
         }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show());
