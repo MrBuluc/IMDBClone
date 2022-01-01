@@ -30,6 +30,8 @@ public class OpenModel implements Serializable {
     String rating;
     @SerializedName("imdbVotes")
     String votes;
+    @SerializedName("imdbID")
+    String imdbID;
     @SerializedName("Type")
     String type;
     @SerializedName("Response")
@@ -85,6 +87,10 @@ public class OpenModel implements Serializable {
 
     public String getType() {
         return type;
+    }
+
+    public String getImdbID() {
+        return imdbID;
     }
 
     public String getResponse() {
