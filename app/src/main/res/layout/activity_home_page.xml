@@ -6,4 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".view.HomePage">
 
+    <EditText
+        android:id="@+id/editTxtSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Search movies or TV series"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnPopularMovies"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="goToPopularMovies"
+        android:text="Popular Movıes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTxtSearch" />
+
+    <Button
+        android:id="@+id/btnPopularTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="goToPopularTv"
+        android:text="Popular Tv Serıes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPopularMovies" />
+
+    <Button
+        android:id="@+id/btnFavoriteMovies"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="goToFavoriteMovies"
+        android:text="Favorıte Movıes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPopularTv" />
+
+    <Button
+        android:id="@+id/btnFavoriteTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="goToFavoriteTv"
+        android:text="Favorıte Tv Serıes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFavoriteMovies" />
+
+    <Button
+        android:id="@+id/btnSignOut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="signOut"
+        android:text="Sıgn Out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFavoriteTv" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

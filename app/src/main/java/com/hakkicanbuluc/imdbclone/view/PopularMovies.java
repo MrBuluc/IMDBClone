@@ -128,34 +128,6 @@ public class PopularMovies extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.option_menu, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.signout:
-                logout();
-                break;
-            case R.id.tvSeries:
-                startActivity(new Intent(PopularMovies.this, TvSeriesActivity.class));
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void logout() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(PopularMovies.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
 
