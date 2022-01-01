@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hakkicanbuluc.imdbclone.databinding.ActivityRegisterBinding;
+import com.hakkicanbuluc.imdbclone.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,13 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             mAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
                 String uid = Objects.requireNonNull(authResult.getUser()).getUid();
-                HashMap<String, Object> newUser = new HashMap<>();
-                newUser.put("Name", name);
-                newUser.put("Lastname", lName);
-                newUser.put("Email", email);
-                newUser.put("UserID", uid);
-                newUser.put("Favorites", new ArrayList<String>());
-                createNewUser(uid, newUser);
+                User user = new User(uid, name, lName, email);
+                createNewUser(uid, user.toMap());
             }).addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show());
         }
     }
